@@ -1,14 +1,14 @@
-from python:3.10.13-alpine3.19
-workdir /app
+FROM python:3.10.13-alpine3.19
 
-copy sources sources
+RUN adduser -S appuser
+USER appuser
 
-run pip install -r sources/requirements.txt
+WORKDIR /app
+
+COPY sources sources
+
 RUN pip install --no-cache-dir -r sources/requirements.txt
 
-run adduser -S appuser
-user appuser
+EXPOSE 7860
 
-expose 7860
-
-cmd ["python", "sources/main.py"]
+CMD ["python", "sources/main.py"]
