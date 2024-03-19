@@ -1,0 +1,6 @@
+version: '3'
+services:
+    hello-gradio:
+      build: .
+      ports:
+        - "7860:7860"
