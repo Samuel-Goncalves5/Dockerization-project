@@ -1,0 +1,13 @@
+version: '3'
+services:
+    sepia-gradio:
+      build: .
+      ports:
+        - "7860:7860"
+      volumes:
+        - sepia-volume:/app/file
+volumes:
+    sepia-volume:
+        driver: local
+        driver_opts:
+            size: "8GiB"
