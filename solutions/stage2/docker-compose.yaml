@@ -5,9 +5,9 @@ services:
       ports:
         - "7860:7860"
       volumes:
-        - sepia-volume:/app/file
+        - sepia-volume:/app/flagged
 volumes:
     sepia-volume:
         driver: local
         driver_opts:
-            size: "8GiB"
+            size: "8GB"
