@@ -8,6 +8,4 @@ services:
         - sepia-volume:/app/flagged
 volumes:
     sepia-volume:
-        driver: local
-        driver_opts:
-            size: "8GB"
+        external: true
