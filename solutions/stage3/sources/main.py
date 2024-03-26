@@ -2,9 +2,19 @@ import gradio as gr
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 import requests
 from PIL import Image
+import os
 
-processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
-model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
+if os.path.exists("flagged/models"):
+    model = VisionEncoderDecoderModel.from_pretrained("flagged/models/model")
+    processor = TrOCRProcessor.from_pretrained("flagged/models/processor", local_files_only=True)
+else:
+    model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
+    processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
+    
+    os.mkdir("flagged/models")
+
+    model.save_pretrained("flagged/models/model")
+    processor.save_pretrained("flagged/models/processor")
 
 # load image examples from the IAM database
 urls = ['https://fki.tic.heia-fr.ch/static/img/a01-122-02.jpg', 
@@ -38,4 +48,4 @@ iface = gr.Interface(fn=process_image,
                      description=description,
                      article=article,
                      examples=examples)
-iface.launch(debug=True)
+iface.launch(server_name="0.0.0.0")
